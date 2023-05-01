@@ -6,13 +6,15 @@ const resultDivided = document.getElementById('result-area');
 const tweetDivided = document.getElementById('tweet-area');
 
 userNameInput.onkeydown = event => {
+    console.log(event);
     if (event.key === 'Enter') {
-      // TODO ボタンのonclick() 処理を呼び出す
-      assessmentButton.onclick();
-    }
-  };
-assessmentButton.onclick = () => 
-{
+
+        // TODO ボタンのonclick() 処理を呼び出す
+
+        assessmentButton.onclick();
+    };
+}
+assessmentButton.onclick = () => {
     const userName = userNameInput.value;
 
 
@@ -25,24 +27,37 @@ assessmentButton.onclick = () =>
 
     console.log(resultDivided.innerText);
 
-    const header = document.createElement('h3');
-    header.innerText = '診断結果';
-    resultDivided.appendChild(header);
+    // headerDividedの作成
+    const headerDivided = document.createElement('div');
+    headerDivided.setAttribute('class', 'card-header');
+    headerDivided.innerText = '診断結果';
+
+    // bodyDividedの作成
+    const bodyDivided = document.createElement('div');
+    bodyDivided.setAttribute('class', 'card-body');
     const paragraph = document.createElement('p');
+    paragraph.setAttribute('class', 'card-text');
     const result = assessment(userName);
     paragraph.innerText = result;
-    resultDivided.appendChild(paragraph);
+    bodyDivided.appendChild(paragraph);
 
-    //console.log(resultDivided.innerText);
+    // resultDividedにBootstrapのスタイルを適用する
+    resultDivided.setAttribute('class', 'card');
+    resultDivided.setAttribute('style', 'max-width: 700px');
+
+    //headerDividedとbodyDividedをresultDividedに差し込む
+    resultDivided.appendChild(headerDivided);
+    resultDivided.appendChild(bodyDivided);
+
 
     // TODO ツイートエリアの作成
     tweetDivided.innerText = '';
     console.log(tweetDivided.innerText);
     const anchor = document.createElement('a');
     const hrefValue =
-    'https://twitter.com/intent/tweet?button_hashtag=' +
-    encodeURIComponent('あなたのいいところ') +
-    '&ref_src=twsrc%5Etfw';
+        'https://twitter.com/intent/tweet?button_hashtag=' +
+        encodeURIComponent('あなたのいいところ') +
+        '&ref_src=twsrc%5Etfw';
 
     anchor.setAttribute('href', hrefValue);
     anchor.setAttribute('class', 'twitter-hashtag-button');
@@ -56,6 +71,7 @@ assessmentButton.onclick = () =>
     tweetDivided.appendChild(script);
 
 };
+
 const answers = [
 '{userName}のいいところは声です。{userName}の特徴的な声は皆を惹きつけ、心に残ります。',
 '{userName}のいいところはまなざしです。{userName}に見つめられた人は、気になって仕方がないでしょう。',
